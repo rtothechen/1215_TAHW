@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #history {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Simple Calculator</h1>
+
+    <button onclick="startCalculator()">Start Calculator</button>
+
+    <div id="history"></div>
+
+    <script>
+        function add(x, y) {
+            return x + y;
+        }
+
+        function subtract(x, y) {
+            return x - y;
+        }
+
+        function multiply(x, y) {
+            return x * y;
+        }
+
+        function divide(x, y) {
+            return x / y;
+        }
+
+        function getUserInput(promptText) {
+            return parseFloat(window.prompt(promptText));
+        }
+
+        function startCalculator() {
+            var historyDiv = document.getElementById('history');
+            var calculationHistory = "";
+
+            while (true) {
+                var num1 = getUserInput("Enter the first number:");
+
+                if (isNaN(num1)) {
+                    alert("Invalid input for the first number. Please enter a valid number.");
+                    continue;
+                }
+
+                var operation = window.prompt("Enter the operation (+, -, *, /):");
+
+                if (operation !== '+' && operation !== '-' && operation !== '*' && operation !== '/') {
+                    alert("Invalid operation. Please enter a valid operation.");
+                    continue;
+                }
+
+                var num2 = getUserInput("Enter the second number:");
+
+                if (isNaN(num2)) {
+                    alert("Invalid input for the second number. Please enter a valid number.");
+                    continue;
+                }
+
+                var result;
+                switch (operation) {
+                    case '+':
+                        result = add(num1, num2);
+                        break;
+                    case '-':
+                        result = subtract(num1, num2);
+                        break;
+                    case '*':
+                        result = multiply(num1, num2);
+                        break;
+                    case '/':
+                        if (num2 !== 0) {
+                            result = divide(num1, num2);
+                        } else {
+                            alert("Cannot divide by zero.");
+                            continue;
+                        }
+                        break;
+                    default:
+                        alert("Invalid operation.");
+                        continue;
+                }
+
+                alert("Result: " + result);
+
+                calculationHistory = "Result: " + result + "<br>" + calculationHistory;
+
+                
+                var continueCalculation = confirm("Do you want to perform another calculation?");
+                if (!continueCalculation) {
+                    break;
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
